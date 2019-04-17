@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import firebase from '../Firebase';
 import {Link} from 'react-router-dom';
-import { Button, Card, Image } from 'semantic-ui-react';
+import { Button} from 'semantic-ui-react';
 
 class Show extends Component{
     constructor(props){
@@ -18,7 +18,7 @@ class Show extends Component{
                 this.setState({
                     boards: doc.data(),
                     key: doc.id,
-                    isLoading: false
+                    // isLoading: false
                 });
 
             } else {
@@ -27,9 +27,9 @@ class Show extends Component{
         });
     }
     delete(id){
-        firebase.firestore().collection('boards').doc(id).delete().then(()=>{
+        firebase.firestore().collection('boards').doc(id).delete().then(()=>{ //Удаление номера по id
            console.log("Document successfully deleted!");
-           this.props.history.push("/")
+           this.props.history.push("/") //Переход после удаления на App.js
         }).catch((error)=>{
            console.error("Error removing document: ", error);
         });
@@ -38,25 +38,34 @@ class Show extends Component{
     render() {
         return(
             <div className='ui container'>
-                <h4 className='ui-header'><Link to='/'/>Phone List</h4>
-                <Card>
-                    <Card.Content>
-                        <Image/>
-                        <Card.Header><h3 className=' phone_number'>{this.state.boards.phone_number}</h3></Card.Header>
-                        <Card.Header>{this.state.boards.firstName}{this.state.boards.lastName}</Card.Header>
-                        <Card.Meta>{this.state.boards.email}</Card.Meta>
-                        <Card.Description>{this.state.boards.company}</Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                        <div className='ui two buttons'>
-                            <Button basic color='green'><Link to={`/edit/${this.state.key}`}>Approve</Link>
-                            </Button>
-                            <Button basic color='red' onClick={this.delete.bind(this, this.state.key)}>
-                                Decline
-                            </Button>
+                <div className="ui segment">
+                    <h3 className="ui center aligned header">Card</h3>
+                    <div className="headerContainer_Show">
+                        <Button className="buttonShow"><Link to='/'> Back To Phone List</Link></Button>
+                    </div>
+
+                    <div className="ui centered card">
+                        <div className="image">
+                            <img className="right floated mini ui image" src={this.state.boards.url} alt=""/>
                         </div>
-                    </Card.Content>
-                </Card>
+                        <div className="content">
+                            <div className="header"><h3 className=' phone_number'>{this.state.boards.phone_number}</h3>
+                            </div>
+                            <div className="meta">{this.state.boards.firstName} {this.state.boards.lastName}</div>
+                            <div className="meta">{this.state.boards.email}</div>
+                            <div className="description">{this.state.boards.company}</div>
+                            <div className="extra content">
+                                <div className='ui two buttons'>
+                                    <Button basic color='green'><Link to={`/edit/${this.state.key}`}>Edit</Link>
+                                    </Button>
+                                    <Button basic color='red' onClick={this.delete.bind(this, this.state.key)}>
+                                        Delete
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "material-ui-phone-number": "^1.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-material-ui-form-validator": "^2.0.7",
+    "react-phone-input-2": "^2.9.3",
+    "react-phone-number-input": "^2.3.11",
+    "react-scripts": "2.1.8",
+    "redux-form": "^8.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
